@@ -10,7 +10,7 @@ public class Main {
                 (int)(Math.random() * 9) + 1,
                 (int)(Math.random() * 9) + 1,
                 (int)(Math.random() * 9) + 1,
-                         };
+        };
 
         System.out.println("정답 : " + Arrays.toString(comNum));
 
@@ -27,12 +27,12 @@ public class Main {
                 do {
                     tempNum = input.nextInt();
                     input.nextLine();
-                    if (tempNum > 9) {
+                    if (tempNum > 9 || tempNum < 1) {
                         System.out.println("입력값을 1~9까지로 입력해주세요");
                     }
                 } while (tempNum >= 10);
                 myNum[i] = tempNum;
-        }
+            }
 
             // 검증
             for (int i = 0 ; i<comNum.length ; i++){
