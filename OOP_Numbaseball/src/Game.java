@@ -1,11 +1,14 @@
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Game {
 
     public static final int STRIKE_NUMBER = 3;
     private static final int MAX_NUMBER = 9;
     private static final int MIN_NUMBER = 1;
+
+    static Set<Integer> checkSame = new HashSet<>();
 
     private final Scanner input;
     private final Player computer;
@@ -62,6 +65,7 @@ public class Game {
     private void resetCounts() {
         strike = 0;
         ball = 0;
+        checkSame.clear();
 
     }
 
@@ -78,19 +82,38 @@ public class Game {
         return result;
     }
 
+
+
     private int[] getUserNumbers() {
         int[] userNumbers = new int[STRIKE_NUMBER];
-        for(int i = 0; i < STRIKE_NUMBER; i++) {
-            int tempNum;
-            do {
-                tempNum = input.nextInt();
-                input.nextLine();
-                if (tempNum > MAX_NUMBER || tempNum < MIN_NUMBER) {
-                    System.out.println("입력값을 1~9까지로 입력해주세요.");
-                }
-            } while (tempNum > MAX_NUMBER || tempNum < MIN_NUMBER);
-            userNumbers[i] = tempNum;
+        int i=0;
+        getUserNumFirst(checkSame);
+
+        while (checkSame.size() != 3) {
+            System.out.println("중복된 값이 있습니다");
+            checkSame.clear();
+            getUserNumFirst(checkSame);
         }
+        for(Integer num : checkSame){
+            userNumbers[i++] = num;
+        }
+
         return userNumbers;
+    }
+
+
+    private Set<Integer> getUserNumFirst(Set<Integer> checkSame) {
+        int tempNum;
+        for (int i = 0; i < STRIKE_NUMBER; i++) {
+            tempNum = input.nextInt();
+            input.nextLine();
+            if (tempNum > MAX_NUMBER || tempNum < MIN_NUMBER) {
+                System.out.println("입력값을 1~9까지로 입력해주세요.");
+                i--;
+            }else {
+                checkSame.add(tempNum);
+            }
+        }
+        return checkSame;
     }
 }
