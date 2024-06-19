@@ -1,6 +1,6 @@
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Scanner;
-import java.util.Set;
+
 
 public class Game {
 
@@ -8,7 +8,7 @@ public class Game {
     private static final int MAX_NUMBER = 9;
     private static final int MIN_NUMBER = 1;
 
-    static Set<Integer> checkSame = new HashSet<>();
+    static LinkedHashSet<Integer> checkSame = new LinkedHashSet<>();
 
     private final Scanner input;
     private final Player computer;
@@ -87,12 +87,12 @@ public class Game {
     private int[] getUserNumbers() {
         int[] userNumbers = new int[STRIKE_NUMBER];
         int i=0;
-        getUserNumFirst(checkSame);
+        getUserNumFirst();
 
         while (checkSame.size() != 3) {
             System.out.println("중복된 값이 있습니다");
             checkSame.clear();
-            getUserNumFirst(checkSame);
+            getUserNumFirst();
         }
         for(Integer num : checkSame){
             userNumbers[i++] = num;
@@ -102,7 +102,7 @@ public class Game {
     }
 
 
-    private Set<Integer> getUserNumFirst(Set<Integer> checkSame) {
+    private void getUserNumFirst() {
         int tempNum;
         for (int i = 0; i < STRIKE_NUMBER; i++) {
             tempNum = input.nextInt();
@@ -114,6 +114,5 @@ public class Game {
                 checkSame.add(tempNum);
             }
         }
-        return checkSame;
     }
 }
