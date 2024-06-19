@@ -1,5 +1,4 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedHashSet;
 
 public class Player {
 
@@ -13,7 +12,7 @@ public class Player {
     }
 
     private void computerNumberCreate() {
-        Set<Integer> comNum = new HashSet<>();
+        LinkedHashSet<Integer> comNum = new LinkedHashSet<>();
         while (comNum.size() < Game.STRIKE_NUMBER) {
             int tempNum = (int)(Math.random() * 9 + 1);
             comNum.add(tempNum);
