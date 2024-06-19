@@ -6,9 +6,9 @@ public class Game {
 
     public static final int STRIKE_NUMBER = 3;
     private static final int MAX_NUMBER = 9;
-    private static final int MIN_NUMBER = 1;
+    private static final int MIN_NUMBER = 0;
 
-    static LinkedHashSet<Integer> checkSame = new LinkedHashSet<>();
+    private final LinkedHashSet<Integer> checkSame = new LinkedHashSet<>();
 
     private final Scanner input;
     private final Player computer;
@@ -24,16 +24,16 @@ public class Game {
     }
 
     public void startGame() {
-        System.out.println("정답: " + convertArrayToInt(computer.getNumbers()));
+        System.out.println("정답: " + convertArrayToString(computer.getNumbers()));
         System.out.println("컴퓨터가 숫자를 생성하였습니다. 답을 맞춰보세요!");
         while (onPlay) {
             user.setNumbers(getUserNumbers());
             checkNumbers();
+            printResult();
             if (strike == STRIKE_NUMBER) {
                 endGame();
                 continue;
             }
-            printResult();
             attempts++;
             resetCounts();
         }
@@ -51,7 +51,6 @@ public class Game {
                 }
             }
         }
-
     }
 
     private void endGame() {
@@ -70,16 +69,22 @@ public class Game {
     }
 
     private void printResult() {
-        int userNum = convertArrayToInt(user.getNumbers());
+        String userNum = convertArrayToString(user.getNumbers());
         System.out.println(attempts + "번째 시도: " + userNum);
-        System.out.println(ball + "B" + strike + "S");
+        if (strike == STRIKE_NUMBER) {
+            System.out.println(strike + "S");
+        } else if (ball == STRIKE_NUMBER) {
+            System.out.println(ball +  "B");
+        } else {
+            System.out.println(ball + "B" + strike + "S");
+        }
     }
 
-    private int convertArrayToInt(int[] numbers) {
-        int result = 0;
+    private String convertArrayToString(int[] numbers) {
+        StringBuilder stringBuilder = new StringBuilder();
         for (int number : numbers)
-            result = result * 10 + number;
-        return result;
+            stringBuilder.append(number);
+        return stringBuilder.toString();
     }
 
 
@@ -89,7 +94,7 @@ public class Game {
         int i=0;
         getUserNumFirst();
 
-        while (checkSame.size() != 3) {
+        while (checkSame.size() != STRIKE_NUMBER) {
             System.out.println("중복된 값이 있습니다");
             checkSame.clear();
             getUserNumFirst();
@@ -108,7 +113,7 @@ public class Game {
             tempNum = input.nextInt();
             input.nextLine();
             if (tempNum > MAX_NUMBER || tempNum < MIN_NUMBER) {
-                System.out.println("입력값을 1~9까지로 입력해주세요.");
+                System.out.println("입력값을 0~9까지로 입력해주세요.");
                 i--;
             }else {
                 checkSame.add(tempNum);

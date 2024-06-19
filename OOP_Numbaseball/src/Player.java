@@ -14,7 +14,7 @@ public class Player {
     private void computerNumberCreate() {
         LinkedHashSet<Integer> comNum = new LinkedHashSet<>();
         while (comNum.size() < Game.STRIKE_NUMBER) {
-            int tempNum = (int)(Math.random() * 9 + 1);
+            int tempNum = (int)(Math.random() * 10);
             comNum.add(tempNum);
         }
         int i = 0;
